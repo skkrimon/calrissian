@@ -1,14 +1,15 @@
 import { Bootstrap } from './lib/bootstrap';
+import { useEffect } from 'react';
 
 function App() {
-  const bootstrap = () => {
+  useEffect(() => {
     const boot = new Bootstrap();
     boot.init();
-  };
+  }, []);
 
   return (
     <>
-      <button onClick={bootstrap}>Hello World!</button>
+      <h1>Hello World!</h1>
     </>
   );
 }
