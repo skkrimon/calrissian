@@ -1,21 +1,14 @@
-import { useEffect, useState } from 'react';
-import { invoke } from '@tauri-apps/api/tauri';
+import { Scanner } from './lib/scanner';
 
 function App() {
-  const [msg, setMsg] = useState('');
-
-  useEffect(() => {
-    const sayHello = async () => {
-      const data: string = await invoke('greet');
-      setMsg(data);
-    };
-
-    sayHello();
-  }, []);
+  const test = async () => {
+    const scanner = new Scanner('C:\\Dev\\www');
+    await scanner.scanDir();
+  };
 
   return (
     <>
-      <h1>{msg}</h1>
+      <button onClick={test}>Test</button>
     </>
   );
 }

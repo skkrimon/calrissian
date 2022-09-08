@@ -3,14 +3,13 @@
     windows_subsystem = "windows"
 )]
 
-#[tauri::command]
-fn greet() -> String {
-    return String::from("Hello from Tauri!");
-}
+mod lando;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![
+            lando::lando_start
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -31,8 +31,7 @@
         "camelcase": "warn",
         "spaced-comment": "error",
         "quotes": ["error", "single"],
-        "no-console": "warn",
-        "no-empty": "warn"
+        "no-console": "warn"
     },
     "settings": {
         "import/resolver": {
