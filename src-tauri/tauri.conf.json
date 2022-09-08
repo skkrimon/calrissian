@@ -23,6 +23,19 @@
         "renameFile": true,
         "scope": ["**"],
         "writeFile": true
+      },
+      "shell": {
+        "all": false,
+        "execute": true,
+        "open": false,
+        "scope": [
+          {
+            "name": "run-lando-command",
+            "cmd": "lando",
+            "args": true
+          }
+        ],
+        "sidecar": true
       }
     },
     "bundle": {
