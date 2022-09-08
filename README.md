@@ -1,7 +1,7 @@
-# Tauri + React + Typescript
+# Calrissian
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+A Desktop App to start, stop and manage Lando enviorments
 
-## Recommended IDE Setup
+## TODO's
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- Beim starten der App öffnete sich ein Dialog in welchem man auswählen kann wo sich das standart Projekt-Verzeichnis befindet

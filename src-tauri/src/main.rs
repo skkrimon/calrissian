@@ -4,8 +4,8 @@
 )]
 
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn greet() -> String {
+    return String::from("Hello from Tauri!");
 }
 
 fn main() {
