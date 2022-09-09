@@ -28,18 +28,17 @@ function App() {
   }, []);
 
   const loadEnvs = async () => {
+    setIsRefreshing(true);
     const scanner = new Scanner('/Users/simonzapf/Entwicklung/www/');
-
     await scanner.scanDir();
 
     const parsed = await scanner.parse();
     setLandoEnvs(parsed);
+    setIsRefreshing(false);
   };
 
-  const handleRefresh = async () => {
-    setIsRefreshing(true);
-    await loadEnvs();
-    setIsRefreshing(false);
+  const handleRefresh = () => {
+    loadEnvs();
   };
 
   return (
