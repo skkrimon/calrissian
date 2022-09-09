@@ -81,16 +81,14 @@ function UrlModal({ path }: UrlModalProps) {
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
             {landoInfos.map((landoInfo, index) => (
               <div key={index}>
-                <Typography variant='h5'>{landoInfo.service}</Typography>
+                <Typography sx={{ mt: '10px'}} variant='h5'>{landoInfo.service}</Typography>
                 {landoInfo.urls.map((url, index) => (
                   <Typography key={index}>{url}</Typography>
                 ))}
               </div>
             ))}
-          </Typography>
         </Box>
       </Modal>
     </div>
