@@ -1,3 +1,4 @@
+import { LandoEnv } from './../models/lando-env';
 import { FileEntry, readDir } from '@tauri-apps/api/fs';
 
 export class Scanner {
@@ -25,6 +26,22 @@ export class Scanner {
         this._landoEnviorments.push(entry);
       }
     }
+  }
+
+  public parse(): LandoEnv[] {
+    const envs: LandoEnv[] = [];
+
+    for (let i = 0; i < this._landoEnviorments.length; i++) {
+      const landoEnviorment = this._landoEnviorments[i];
+
+      envs.push({
+        name: landoEnviorment.name,
+        path: landoEnviorment.path,
+        running: false
+      });
+    }
+
+    return envs;
   }
 
   private async searchLandoConfig(dir: FileEntry): Promise<boolean> {

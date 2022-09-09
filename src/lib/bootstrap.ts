@@ -1,5 +1,7 @@
 import { BaseDirectory, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
 
+// future implementation
+
 export class Bootstrap {
   public init() {
     this.loadConfig();
