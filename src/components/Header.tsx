@@ -1,6 +1,5 @@
 import { AppBar, Icon, IconButton, Toolbar, Tooltip } from '@mui/material';
 import { Lando } from '../lib/lando';
-import Spinner from './Spinner';
 
 interface HeaderProps {
   handleRefresh: () => void;
