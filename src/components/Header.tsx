@@ -1,4 +1,4 @@
-import { AppBar, Icon, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Icon, IconButton, Toolbar, Tooltip } from '@mui/material';
 import Spinner from './Spinner';
 
 interface HeaderProps {
@@ -16,12 +16,16 @@ function Header(props: HeaderProps) {
             justifyContent: 'end',
           }}
         >
-          <IconButton onClick={props.handleRefresh} aria-label='autorenew' size='large'>
-            <Icon>autorenew</Icon>
-          </IconButton>
-          <IconButton aria-label='settings' size='large'>
-            <Icon>settings</Icon>
-          </IconButton>
+          <Tooltip title='Refresh'>
+            <IconButton onClick={props.handleRefresh} aria-label='autorenew' size='large'>
+              <Icon>autorenew</Icon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Settings'>
+            <IconButton aria-label='settings' size='large'>
+              <Icon>settings</Icon>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </>
