@@ -35,4 +35,9 @@ export class Lando {
     const command = new Command('run-lando-command', 'poweroff');
     return command.execute();
   }
+
+  public static list(): Promise<ChildProcess> {
+    const command = new Command('run-lando-command', 'list');
+    return command.execute();
+  }
 }

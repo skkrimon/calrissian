@@ -1,3 +1,4 @@
+import { Checker } from './checker';
 import { LandoEnv } from './../models/lando-env';
 import { FileEntry, readDir } from '@tauri-apps/api/fs';
 
@@ -28,7 +29,7 @@ export class Scanner {
     }
   }
 
-  public parse(): LandoEnv[] {
+  public async parse(): Promise<LandoEnv[]> {
     const envs: LandoEnv[] = [];
 
     for (let i = 0; i < this._landoEnviorments.length; i++) {
@@ -37,7 +38,7 @@ export class Scanner {
       envs.push({
         name: landoEnviorment.name,
         path: landoEnviorment.path,
-        running: false,
+        running: await Checker.checkEnvRunning(landoEnviorment.path),
       });
     }
 

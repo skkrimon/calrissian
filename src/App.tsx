@@ -5,6 +5,7 @@ import { LandoEnv } from './models/lando-env';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
+import { Checker } from './lib/checker';
 
 const darkTheme = createTheme({
   palette: {
@@ -21,16 +22,22 @@ function App() {
     // macos path: /Users/simonzapf/Entwicklung/www/
     // Windows path: C:\\Dev\\www
 
-    const scanner = new Scanner('/Users/simonzapf/Entwicklung/www/');
-    scanner.scanDir().then(() => {
-      setLandoEnvs(scanner.parse());
-    });
+    loadEnvs();
   }, []);
+
+  const loadEnvs = async () => {
+    const scanner = new Scanner('/Users/simonzapf/Entwicklung/www/');
+    
+    await scanner.scanDir();
+
+    const parsed = await scanner.parse();
+    setLandoEnvs(parsed);
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Header />
+      <Header handleRefresh={loadEnvs} />
       {landoEnvs.map((landoEnv, index) => (
         <div className='card' key={index}>
           <Environment env={landoEnv} />
