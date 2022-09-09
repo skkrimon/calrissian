@@ -5,7 +5,7 @@ import { LandoEnv } from './models/lando-env';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
-import { Checker } from './lib/checker';
+import Spinner from './components/Spinner';
 
 const darkTheme = createTheme({
   palette: {
@@ -15,6 +15,8 @@ const darkTheme = createTheme({
 
 function App() {
   const defaultLandoEnvs: LandoEnv[] = [];
+  const [isRefreshing, setIsRefreshing]: [boolean, (isRefreshing: boolean) => void] =
+    useState(false);
   const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
     useState(defaultLandoEnvs);
 
@@ -27,17 +29,24 @@ function App() {
 
   const loadEnvs = async () => {
     const scanner = new Scanner('/Users/simonzapf/Entwicklung/www/');
-    
+
     await scanner.scanDir();
 
     const parsed = await scanner.parse();
     setLandoEnvs(parsed);
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await loadEnvs();
+    setIsRefreshing(false);
+  };
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Header handleRefresh={loadEnvs} />
+      {isRefreshing && <Spinner />}
+      <Header handleRefresh={handleRefresh} />
       {landoEnvs.map((landoEnv, index) => (
         <div className='card' key={index}>
           <Environment env={landoEnv} />

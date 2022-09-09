@@ -1,8 +1,12 @@
+import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+
 function Spinner() {
     return (
-        <>
-            <h1>Spinnin...</h1>
-        </>
+      <div className='backdrop'>
+        <div className='spinner'>
+          <CircularProgress size='5rem' />
+        </div>
+      </div>
     );
 }
 
