@@ -7,16 +7,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark'
-  }
+    mode: 'dark',
+  },
 });
 
 function App() {
   const defaultLandoEnvs: LandoEnv[] = [];
-  const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] = useState(defaultLandoEnvs);
+  const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
+    useState(defaultLandoEnvs);
 
   useEffect(() => {
-    const scanner = new Scanner('C:/Dev/www');
+    const scanner = new Scanner('C:\\Dev\\www');
     scanner.scanDir().then(() => {
       setLandoEnvs(scanner.parse());
     });

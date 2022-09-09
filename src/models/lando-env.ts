@@ -1,5 +1,5 @@
 export interface LandoEnv {
-    running: boolean; 
-    path: string;
-    name?: string;
+  running: boolean;
+  path: string;
+  name?: string;
 }

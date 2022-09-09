@@ -37,7 +37,7 @@ export class Scanner {
       envs.push({
         name: landoEnviorment.name,
         path: landoEnviorment.path,
-        running: false
+        running: false,
       });
     }
 
