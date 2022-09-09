@@ -71,7 +71,7 @@ function UrlModal({ path }: UrlModalProps) {
     <div>
       <Tooltip title='URLs'>
         <IconButton onClick={handleOpen}>
-          <Icon>info</Icon>
+          <Icon>link</Icon>
         </IconButton>
       </Tooltip>
       <Modal
