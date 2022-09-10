@@ -8,6 +8,7 @@ import { Lando } from '../lib/lando';
 import * as dJSON from 'dirty-json';
 import { ChildProcess } from '@tauri-apps/api/shell';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
+import { open as openUrl } from '@tauri-apps/api/shell';
 
 interface UrlModalProps {
   path: string;
@@ -87,7 +88,13 @@ function UrlModal({ path }: UrlModalProps) {
                 {landoInfo.service}
               </Typography>
               {landoInfo.urls.map((url, index) => (
-                <Typography key={index}>{url}</Typography>
+                <Typography
+                  sx={{ '&:hover': { color: 'blue', cursor: 'pointer' } }}
+                  key={index}
+                  onClick={() => openUrl(url)}
+                >
+                  {url}
+                </Typography>
               ))}
             </div>
           ))}
