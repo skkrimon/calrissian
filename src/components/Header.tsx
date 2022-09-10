@@ -1,15 +1,11 @@
 import { AppBar, Icon, IconButton, Toolbar, Tooltip } from '@mui/material';
-import { Lando } from '../lib/lando';
 
 interface HeaderProps {
   handleRefresh: () => void;
+  handlePoweroff: () => void;
 }
 
 function Header(props: HeaderProps) {
-  const onPoweroff = () => {
-    Lando.poweroff();
-  };
-
   return (
     <>
       <AppBar position='static'>
@@ -21,7 +17,7 @@ function Header(props: HeaderProps) {
           }}
         >
           <Tooltip title='Poweroff'>
-            <IconButton onClick={onPoweroff} aria-label='autorenew' size='large'>
+            <IconButton onClick={props.handlePoweroff} aria-label='autorenew' size='large'>
               <Icon>power_settings_new</Icon>
             </IconButton>
           </Tooltip>
