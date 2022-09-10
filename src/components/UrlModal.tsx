@@ -47,7 +47,7 @@ function UrlModal({ path }: UrlModalProps) {
     setOpen(true);
 
     Lando.info(path).then((out: ChildProcess) => {
-      const infos: any[] = dJSON.parse(out.stdout);
+      const infos: LandoInfo[] = dJSON.parse(out.stdout);
 
       const arr: LandoInfo[] = [];
       for (let i = 0; i < infos.length; i++) {
