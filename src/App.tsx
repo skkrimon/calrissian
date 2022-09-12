@@ -56,7 +56,6 @@ function App() {
 
   const handleSearch = (value: string) => {
     setSearch(value);
-    setLandoEnvs(landoEnvs);
   };
 
   return (
