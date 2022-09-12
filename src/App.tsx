@@ -2,22 +2,19 @@ import { useEffect, useState } from 'react';
 import Environment from './components/Environment';
 import { Scanner } from './lib/scanner';
 import { LandoEnv } from './models/lando-env';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
 import { Lando } from './lib/lando';
 import { type } from '@tauri-apps/api/os';
 import { Notification } from './lib/notification';
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+import { darkTheme, lightTheme } from './utils/theme';
 
 function App() {
   const notification = new Notification();
+
+  const [search, setSearch]: [string, (filter: string) => void] = useState('op-');
 
   const defaultLandoEnvs: LandoEnv[] = [];
   const [isRefreshing, setIsRefreshing]: [boolean, (isRefreshing: boolean) => void] =
@@ -58,16 +55,25 @@ function App() {
     notification.send('Stopped all Lando Environments');
   };
 
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setLandoEnvs(landoEnvs);
+  };
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       {isRefreshing && <Spinner />}
-      <Header handleRefresh={handleRefresh} handlePoweroff={handlePoweroff} />
-      {landoEnvs.map((landoEnv, index) => (
-        <div className='card' key={index}>
-          <Environment env={landoEnv} />
-        </div>
-      ))}
+      <Header handleRefresh={handleRefresh} handlePoweroff={handlePoweroff} handleSearch={handleSearch} />
+      {landoEnvs.map((landoEnv, index) => {
+        if (landoEnv.name?.includes(search)) {
+          return (
+            <div className='card' key={index}>
+              <Environment env={landoEnv} />
+            </div>
+          );
+        }
+      })}
     </ThemeProvider>
   );
 }
