@@ -10,7 +10,6 @@ import { Lando } from './lib/lando';
 import { type } from '@tauri-apps/api/os';
 import { Notification } from './lib/notification';
 import { darkTheme } from './utils/theme';
-import { invoke } from '@tauri-apps/api/tauri';
 
 function App() {
   const notification = new Notification();
@@ -25,7 +24,7 @@ function App() {
   useEffect(() => {
     loadEnvs();
   }, []);
-  
+
   const loadEnvs = async () => {
     const osType = await type();
     let path = '/Users/simonzapf/Entwicklung/www/';
