@@ -1,3 +1,1 @@
-export class ConfigLoader {
-
-}
+export class ConfigLoader {}

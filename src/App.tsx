@@ -63,7 +63,11 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       {isRefreshing && <Spinner />}
-      <Header handleRefresh={handleRefresh} handlePoweroff={handlePoweroff} handleSearch={handleSearch} />
+      <Header
+        handleRefresh={handleRefresh}
+        handlePoweroff={handlePoweroff}
+        handleSearch={handleSearch}
+      />
       {landoEnvs.map((landoEnv, index) => {
         if (landoEnv.name?.includes(search)) {
           return (

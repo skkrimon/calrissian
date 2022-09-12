@@ -10,7 +10,8 @@
     "tauri": "tauri",
     "lint": "npx eslint src/**/*.{ts,tsx}",
     "lint:fix": "npx eslint --fix src/**/*.{ts,tsx}",
-    "format": "prettier --write src/**/*.{ts,tsx,css} --config ./.prettierrc"
+    "format": "prettier --write src/**/*.{ts,tsx,css} --config ./.prettierrc",
+    "ca": "npm run lint:fix && npm run format"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
