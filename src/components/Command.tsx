@@ -12,7 +12,7 @@ function Command(props: CommandProps) {
     };
 
   return (
-    <Card sx={{ minWidth: 415, backgroundColor: 'black', marginTop: '10px' }}>
+    <Card sx={{ minWidth: 468, backgroundColor: 'black', marginTop: '10px' }}>
       <CardContent>
         <Typography variant='h6' component='div'>
           {props.tooling.name}

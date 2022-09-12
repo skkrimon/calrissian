@@ -33,14 +33,9 @@
             "name": "run-lando-command",
             "cmd": "lando",
             "args": true
-          },
-          {
-            "name": "open-zsh",
-            "cmd": "zsh",
-            "args": true
           }
         ],
-        "sidecar": true
+        "sidecar": false
       }
     },
     "bundle": {
@@ -88,7 +83,7 @@
         "height": 600,
         "resizable": false,
         "title": "Calrissian",
-        "width": 500
+        "width": 550
       }
     ]
   }
