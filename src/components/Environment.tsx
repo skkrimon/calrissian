@@ -9,14 +9,12 @@ import Icon from '@mui/material/Icon/Icon';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
 import Typography from '@mui/material/Typography/Typography';
-import { ChildProcess } from '@tauri-apps/api/shell';
 import { useState } from 'react';
 import { Lando } from '../lib/lando';
 import { Notification } from '../lib/notification';
 import { LandoEnv } from '../models/lando-env';
 import UrlModal from './UrlModal';
-import JSONPretty from 'react-json-pretty';
-import * as dJSON from 'dirty-json';
+import InfoModal from './InfoModal';
 
 interface EnvironmentProps {
   env: LandoEnv;
@@ -27,24 +25,9 @@ function Environment({ env }: EnvironmentProps) {
 
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState(false);
   const [expanded, setExpanded]: [boolean, (expanded: boolean) => void] = useState(false);
-  const [landoInfo, setLandoInfo]: [string, (landoInfo: string) => void] = useState('');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    if (!expanded) {
-      loadInfo();
-    }
-  };
-
-  const loadInfo = () => {
-    if (landoInfo === '') {
-      setLoading(true);
-    }
-    Lando.info(env.path).then((out: ChildProcess) => {
-      const json = JSON.stringify(dJSON.parse(out.stdout));
-      setLandoInfo(json);
-      setLoading(false);
-    });
   };
 
   const onStart = () => {
@@ -147,14 +130,15 @@ function Environment({ env }: EnvironmentProps) {
                 <Icon>delete</Icon>
               </IconButton>
             </Tooltip>
+            <InfoModal path={env.path} />
             {!expanded ? (
-              <Tooltip title='Show Info'>
+              <Tooltip title='Show Tooling'>
                 <IconButton onClick={handleExpandClick}>
                   <Icon>expand_more</Icon>
                 </IconButton>
               </Tooltip>
             ) : (
-              <Tooltip title='Hide Info'>
+              <Tooltip title='Hide Tooling'>
                 <IconButton onClick={handleExpandClick}>
                   <Icon>expand_less</Icon>
                 </IconButton>
@@ -163,7 +147,7 @@ function Environment({ env }: EnvironmentProps) {
           </CardActions>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent sx={{ fontSize: '12px' }}>
-              <JSONPretty data={landoInfo}></JSONPretty>
+              <Typography>Tooling goes here ...</Typography>
             </CardContent>
           </Collapse>
         </Box>
