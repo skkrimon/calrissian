@@ -48,8 +48,6 @@ export class Scanner {
       });
     }
 
-    console.log(envs);
-
     return envs;
   }
 
