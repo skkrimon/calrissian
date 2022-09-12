@@ -2,3 +2,4 @@
 src-tauri
 dist
 node_modules
+docs
