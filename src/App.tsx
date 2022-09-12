@@ -25,11 +25,7 @@ function App() {
   useEffect(() => {
     loadEnvs();
   }, []);
-
-  const openConsole = () => {
-    invoke('open_console');
-  };
-
+  
   const loadEnvs = async () => {
     const osType = await type();
     let path = '/Users/simonzapf/Entwicklung/www/';
@@ -65,7 +61,6 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <button onClick={openConsole}>OPENENENE</button>
       <CssBaseline />
       {isRefreshing && <Spinner />}
       <Header
