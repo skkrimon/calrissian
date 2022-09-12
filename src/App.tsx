@@ -65,6 +65,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
+      <button onClick={openConsole}>OPENENENE</button>
       <CssBaseline />
       {isRefreshing && <Spinner />}
       <Header
