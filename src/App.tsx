@@ -9,14 +9,13 @@ import Spinner from './components/Spinner';
 import { Lando } from './lib/lando';
 import { type } from '@tauri-apps/api/os';
 import { Notification } from './lib/notification';
-import { darkTheme, lightTheme } from './utils/theme';
+import { darkTheme } from './utils/theme';
 
 function App() {
   const notification = new Notification();
-
-  const [search, setSearch]: [string, (filter: string) => void] = useState('op-');
-
   const defaultLandoEnvs: LandoEnv[] = [];
+
+  const [search, setSearch]: [string, (filter: string) => void] = useState('');
   const [isRefreshing, setIsRefreshing]: [boolean, (isRefreshing: boolean) => void] =
     useState(false);
   const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
