@@ -15,6 +15,7 @@ import { Notification } from '../lib/notification';
 import { LandoEnv } from '../models/lando-env';
 import UrlModal from './UrlModal';
 import InfoModal from './InfoModal';
+import Command from './Command';
 
 interface EnvironmentProps {
   env: LandoEnv;
@@ -131,23 +132,26 @@ function Environment({ env }: EnvironmentProps) {
               </IconButton>
             </Tooltip>
             <InfoModal path={env.path} />
-            {!expanded ? (
-              <Tooltip title='Show Tooling'>
-                <IconButton onClick={handleExpandClick}>
-                  <Icon>expand_more</Icon>
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Tooltip title='Hide Tooling'>
-                <IconButton onClick={handleExpandClick}>
-                  <Icon>expand_less</Icon>
-                </IconButton>
-              </Tooltip>
-            )}
+            {env.tooling.length > 0 &&
+              (!expanded && env.tooling.length ? (
+                <Tooltip title='Show Tooling'>
+                  <IconButton onClick={handleExpandClick}>
+                    <Icon>expand_more</Icon>
+                  </IconButton>
+                </Tooltip>
+              ) : (
+                <Tooltip title='Hide Tooling'>
+                  <IconButton onClick={handleExpandClick}>
+                    <Icon>expand_less</Icon>
+                  </IconButton>
+                </Tooltip>
+              ))}
           </CardActions>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
-            <CardContent sx={{ fontSize: '12px' }}>
-              <Typography>Tooling goes here ...</Typography>
+            <CardContent>
+              {env.tooling.map((tooling, index) => (
+                <Command key={index} tooling={tooling} />
+              ))}
             </CardContent>
           </Collapse>
         </Box>

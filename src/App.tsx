@@ -55,7 +55,7 @@ function App() {
   };
 
   const handleSearch = (value: string) => {
-    setSearch(value);
+    setSearch(value.toLowerCase().trim());
   };
 
   return (

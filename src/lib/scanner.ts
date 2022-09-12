@@ -24,7 +24,7 @@ export class Scanner {
       const entry = entries[i];
 
       const isValid = await this.searchLandoConfig(entry);
-      
+
       if (isValid) {
         this._landoEnviorments.push(entry);
       }
@@ -41,10 +41,10 @@ export class Scanner {
       const tooling = this.parseTooling(yamlData.tooling);
 
       envs.push({
-        name: yamlData.name,
+        name: yamlData.name.toLowerCase().trim(),
         path: landoEnviorment.path,
         running: await Checker.checkEnvRunning(landoEnviorment.path),
-        tooling: tooling
+        tooling: tooling,
       });
     }
 
@@ -79,18 +79,17 @@ export class Scanner {
       const contentBase = await readTextFile(path + '/.lando.yml');
       const contentBaseParsed = YAML.parse(contentBase);
 
-      return {...parsedContent, ...contentBaseParsed};
-      
+      return { ...parsedContent, ...contentBaseParsed };
     } catch (err) {
       return parsedContent;
-    };
+    }
   }
 
   private parseTooling(yaml: any) {
     if (yaml === undefined) {
       return [];
     }
-    
+
     const keys = Object.keys(yaml);
     const arr: Tooling[] = [];
 
