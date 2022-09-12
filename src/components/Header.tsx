@@ -18,7 +18,7 @@ function Header(props: HeaderProps) {
           }}
         >
           <TextField
-            id='outlined-search'
+            id='search'
             label='Search'
             type='search'
             onChange={(e) => props.handleSearch(e.target.value)}

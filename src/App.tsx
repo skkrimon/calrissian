@@ -10,6 +10,7 @@ import { Lando } from './lib/lando';
 import { type } from '@tauri-apps/api/os';
 import { Notification } from './lib/notification';
 import { darkTheme } from './utils/theme';
+import { invoke } from '@tauri-apps/api/tauri';
 
 function App() {
   const notification = new Notification();
@@ -24,6 +25,10 @@ function App() {
   useEffect(() => {
     loadEnvs();
   }, []);
+
+  const openConsole = () => {
+    invoke('open_console');
+  };
 
   const loadEnvs = async () => {
     const osType = await type();
@@ -60,6 +65,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
+      <button onClick={openConsole}>OPENENENE</button>
       <CssBaseline />
       {isRefreshing && <Spinner />}
       <Header

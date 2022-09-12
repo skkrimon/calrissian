@@ -27,11 +27,16 @@
       "shell": {
         "all": false,
         "execute": true,
-        "open": false,
+        "open": true,
         "scope": [
           {
             "name": "run-lando-command",
             "cmd": "lando",
+            "args": true
+          },
+          {
+            "name": "open-zsh",
+            "cmd": "zsh",
             "args": true
           }
         ],

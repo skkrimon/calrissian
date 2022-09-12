@@ -94,9 +94,9 @@ function Environment({ env }: EnvironmentProps) {
         <CardContent>
           <Typography>
             Status:{' '}
-            <i style={{ color: env.running ? 'green' : 'red' }}>
-              {env.running ? 'running' : 'stopped'}
-            </i>
+            <Box sx={{ display: 'inline', color: env.running ? 'success.main' : 'error.main' }}>
+              <i>{env.running ? 'running' : 'stopped'}</i>
+            </Box>
           </Typography>
         </CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', pl: 1, pb: 1 }}>
@@ -148,7 +148,7 @@ function Environment({ env }: EnvironmentProps) {
               ))}
           </CardActions>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
-            <CardContent>
+            <CardContent sx={{ width: '100%' }}>
               {env.tooling.map((tooling, index) => (
                 <Command key={index} tooling={tooling} />
               ))}
