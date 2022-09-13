@@ -89,7 +89,7 @@ function UrlModal({ path }: UrlModalProps) {
               </Typography>
               {landoInfo.urls.map((url, index) => (
                 <Typography
-                  sx={{ '&:hover': { color: 'blue', cursor: 'pointer' } }}
+                  sx={{ '&:hover': { color: 'info.dark', cursor: 'pointer' } }}
                   key={index}
                   onClick={() => openUrl(url)}
                 >

@@ -7,20 +7,19 @@
   },
   "package": {
     "productName": "calrissian",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
-      "all": true,
       "fs": {
-        "all": true,
-        "copyFile": true,
-        "createDir": true,
+        "all": false,
+        "copyFile": false,
+        "createDir": false,
         "readDir": true,
         "readFile": true,
-        "removeDir": true,
-        "removeFile": true,
-        "renameFile": true,
+        "removeDir": false,
+        "removeFile": false,
+        "renameFile": false,
         "scope": ["**"],
         "writeFile": true
       },
@@ -36,6 +35,15 @@
           }
         ],
         "sidecar": false
+      },
+      "notification": {
+        "all": true
+      },
+      "os": {
+        "all": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {
