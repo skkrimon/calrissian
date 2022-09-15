@@ -31,7 +31,7 @@ function App() {
   const loadEnvs = async () => {
     const configLoader = new ConfigLoader();
 
-    configLoader.writeConfig({ projectDir: 'C:/Dev/www' });
+    ConfigLoader.writeConfig({ projectDir: 'C:/Dev/www' });
 
     setConfig(await configLoader.load());
 
