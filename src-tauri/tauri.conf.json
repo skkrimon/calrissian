@@ -11,6 +11,7 @@
   },
   "tauri": {
     "allowlist": {
+      "all": true,
       "fs": {
         "all": false,
         "copyFile": false,
