@@ -3,23 +3,43 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Icon,
   IconButton,
   Tooltip,
+  TextField,
 } from '@mui/material';
 import { useState } from 'react';
+import { ConfigLoader } from '../lib/config-loader';
+import { Config } from '../models/config';
 
-function Settings() {
+interface SettingsProps {
+  config: Config;
+  handleRefresh: () => void;
+}
+
+function Settings(props: SettingsProps) {
   const [open, setOpen]: [boolean, (open: boolean) => void] = useState(false);
+  const [projectDir, setProjectDir]: [string, (projectDir: string) => void] = useState('');
 
   const handleOpen = () => {
+    setProjectDir(props.config.projectDir);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickClose = async () => {
+    const updatedConfig: Config = {
+      projectDir
+    };
+
+    await ConfigLoader.writeConfig(updatedConfig);
+
+    setOpen(false);
+    props.handleRefresh();
   };
 
   return (
@@ -30,15 +50,21 @@ function Settings() {
         </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>Settings</DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-slide-description'>
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText>
+          <TextField
+            sx={{
+              marginTop: '10px',
+              width: '200px'
+            }}
+            id='search'
+            onChange={(e) => setProjectDir(e.target.value)}
+            value={projectDir}
+            size='small'
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Apply</Button>
+          <Button onClick={handleClickClose}>Apply</Button>
         </DialogActions>
       </Dialog>
     </>

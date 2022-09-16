@@ -31,8 +31,6 @@ function App() {
   const loadEnvs = async () => {
     const configLoader = new ConfigLoader();
 
-    ConfigLoader.writeConfig({ projectDir: 'C:/Dev/www' });
-
     setConfig(await configLoader.load());
 
     const path = config.projectDir;
@@ -70,6 +68,7 @@ function App() {
         handleRefresh={handleRefresh}
         handlePoweroff={handlePoweroff}
         handleSearch={handleSearch}
+        config={config}
       />
       {landoEnvs.map((landoEnv, index) => {
         if (landoEnv.name?.includes(search)) {
