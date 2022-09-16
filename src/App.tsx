@@ -7,34 +7,36 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
 import { Lando } from './lib/lando';
-import { type } from '@tauri-apps/api/os';
 import { Notification } from './lib/notification';
 import { darkTheme } from './utils/theme';
+import { Config } from './models/config';
+import { ConfigLoader } from './lib/config-loader';
 
 function App() {
   const notification = new Notification();
   const defaultLandoEnvs: LandoEnv[] = [];
+  const defaultConfig: Config = { projectDir: '' };
 
   const [search, setSearch]: [string, (filter: string) => void] = useState('');
   const [isRefreshing, setIsRefreshing]: [boolean, (isRefreshing: boolean) => void] =
     useState(false);
   const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
     useState(defaultLandoEnvs);
+  const [config, setConfig]: [Config, (config: Config) => void] = useState(defaultConfig);
 
   useEffect(() => {
     loadEnvs();
   }, []);
 
   const loadEnvs = async () => {
-    const osType = await type();
-    let path = '/Users/simonzapf/Entwicklung/www/';
-
-    if (osType === 'Windows_NT') {
-      path = 'C:\\Dev\\www';
-    }
-
     setIsRefreshing(true);
-    const scanner = new Scanner(path);
+
+    const configLoader = new ConfigLoader();
+    const loadedConfig = await configLoader.load();
+
+    setConfig(loadedConfig);
+
+    const scanner = new Scanner(config.projectDir);
     await scanner.scanDir();
 
     const parsed = await scanner.parse();
@@ -66,6 +68,7 @@ function App() {
         handleRefresh={handleRefresh}
         handlePoweroff={handlePoweroff}
         handleSearch={handleSearch}
+        config={config}
       />
       {landoEnvs.map((landoEnv, index) => {
         if (landoEnv.name?.includes(search)) {

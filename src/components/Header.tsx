@@ -1,9 +1,12 @@
 import { AppBar, Icon, IconButton, TextField, Toolbar, Tooltip } from '@mui/material';
+import { Config } from '../models/config';
+import Settings from './Settings';
 
 interface HeaderProps {
   handleRefresh: () => void;
   handlePoweroff: () => void;
   handleSearch: (value: string) => void;
+  config: Config;
 }
 
 function Header(props: HeaderProps) {
@@ -40,11 +43,7 @@ function Header(props: HeaderProps) {
                 <Icon>save</Icon>
               </IconButton>
             </Tooltip>
-            <Tooltip title='Settings'>
-              <IconButton disabled aria-label='settings' size='large'>
-                <Icon>settings</Icon>
-              </IconButton>
-            </Tooltip>
+            <Settings config={props.config} />
           </div>
         </Toolbar>
       </AppBar>

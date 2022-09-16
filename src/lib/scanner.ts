@@ -83,7 +83,7 @@ export class Scanner {
     }
   }
 
-  private parseTooling(yaml: any) {
+  private parseTooling(yaml: { [key: string]: { [key: string]: string } }) {
     if (yaml === undefined) {
       return [];
     }

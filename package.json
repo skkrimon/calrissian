@@ -1,10 +1,11 @@
 {
   "name": "calrissian",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tauri App for managing Lando Envs",
   "private": false,
   "type": "module",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -12,7 +13,7 @@
     "lint": "npx eslint src/**/*.{ts,tsx}",
     "lint:fix": "npx eslint --fix src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx,css} --config ./.prettierrc",
-    "ca": "npm run lint:fix && npm run format"
+    "ca": "pnpm run lint:fix && pnpm run format"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.5",
+    "@tauri-apps/cli": "^1.1.0",
     "@types/node": "^18.7.10",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
