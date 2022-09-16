@@ -8,10 +8,13 @@ import {
   IconButton,
   Tooltip,
   TextField,
+  Box,
 } from '@mui/material';
 import { useState } from 'react';
 import { ConfigLoader } from '../lib/config-loader';
 import { Config } from '../models/config';
+import { open as openDialog } from '@tauri-apps/api/dialog';
+import { appDir } from '@tauri-apps/api/path';
 
 interface SettingsProps {
   config: Config;
@@ -40,6 +43,20 @@ function Settings(props: SettingsProps) {
     setOpen(false);
   };
 
+  const handleSelect = async () => {
+    const selected = await openDialog({
+      directory: true,
+      multiple: false,
+      defaultPath: await appDir(),
+    });
+
+    if (selected === null || Array.isArray(selected)) {
+      return;
+    }
+
+    setProjectDir(selected);
+  };
+
   return (
     <>
       <Tooltip title='Settings'>
@@ -50,19 +67,34 @@ function Settings(props: SettingsProps) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Settings</DialogTitle>
         <DialogContent>
-          <TextField
+          <Box
             sx={{
               marginTop: '10px',
-              width: '200px',
+              width: '400px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
-            id='search'
-            onChange={(e) => setProjectDir(e.target.value)}
-            value={projectDir}
-            size='small'
-          />
+          >
+            <TextField
+              style={{ width: '340px' }}
+              id='search'
+              onChange={(e) => setProjectDir(e.target.value)}
+              value={projectDir}
+              size='small'
+              label='Path to project directory'
+            />
+            <IconButton onClick={handleSelect} size='large'>
+              <Icon>folder</Icon>
+            </IconButton>
+          </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickClose}>Apply</Button>
+          <Tooltip placement='left' title='Multiple reloads may be required until settings apply'>
+            <Button onClick={handleClickClose}>Apply</Button>
+          </Tooltip>
+          <Button onClick={handleClose}>Dismiss</Button>
         </DialogActions>
       </Dialog>
     </>
