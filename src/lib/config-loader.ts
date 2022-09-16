@@ -3,7 +3,7 @@ import { Config } from './../models/config';
 
 export class ConfigLoader {
   private BASE_CONFIG: Config = {
-    projectDir: ''
+    projectDir: '',
   };
 
   public static async writeConfig(config: Config): Promise<void> {

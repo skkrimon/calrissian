@@ -33,7 +33,7 @@ function Settings(props: SettingsProps) {
 
   const handleClickClose = async () => {
     const updatedConfig: Config = {
-      projectDir
+      projectDir,
     };
 
     await ConfigLoader.writeConfig(updatedConfig);
@@ -55,7 +55,7 @@ function Settings(props: SettingsProps) {
           <TextField
             sx={{
               marginTop: '10px',
-              width: '200px'
+              width: '200px',
             }}
             id='search'
             onChange={(e) => setProjectDir(e.target.value)}
