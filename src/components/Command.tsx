@@ -1,24 +1,11 @@
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Icon,
-  IconButton,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import { Tooling } from '../models/tooling';
-import { Command as TauriCommand } from '@tauri-apps/api/shell';
 
 interface CommandProps {
   tooling: Tooling;
 }
 
 function Command(props: CommandProps) {
-  const run = () => {
-    new TauriCommand('open-zsh', '"-c lando list"');
-  };
-
   return (
     <Card sx={{ minWidth: 468, backgroundColor: 'black', marginTop: '10px' }}>
       <CardContent>

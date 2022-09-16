@@ -43,10 +43,7 @@ function Header(props: HeaderProps) {
                 <Icon>save</Icon>
               </IconButton>
             </Tooltip>
-            <Settings 
-            config={props.config} 
-            handleRefresh={props.handleRefresh} 
-            />
+            <Settings config={props.config} />
           </div>
         </Toolbar>
       </AppBar>

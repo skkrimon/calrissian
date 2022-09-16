@@ -15,7 +15,6 @@ import { Config } from '../models/config';
 
 interface SettingsProps {
   config: Config;
-  handleRefresh: () => void;
 }
 
 function Settings(props: SettingsProps) {
@@ -33,13 +32,12 @@ function Settings(props: SettingsProps) {
 
   const handleClickClose = async () => {
     const updatedConfig: Config = {
-      projectDir
+      projectDir,
     };
 
     await ConfigLoader.writeConfig(updatedConfig);
 
     setOpen(false);
-    props.handleRefresh();
   };
 
   return (
@@ -55,7 +53,7 @@ function Settings(props: SettingsProps) {
           <TextField
             sx={{
               marginTop: '10px',
-              width: '200px'
+              width: '200px',
             }}
             id='search'
             onChange={(e) => setProjectDir(e.target.value)}
