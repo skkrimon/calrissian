@@ -15,7 +15,6 @@ import { Config } from '../models/config';
 
 interface SettingsProps {
   config: Config;
-  handleRefresh: () => void;
 }
 
 function Settings(props: SettingsProps) {
@@ -39,7 +38,6 @@ function Settings(props: SettingsProps) {
     await ConfigLoader.writeConfig(updatedConfig);
 
     setOpen(false);
-    props.handleRefresh();
   };
 
   return (

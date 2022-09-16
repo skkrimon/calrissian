@@ -2,4 +2,6 @@
 
 # Calrissian
 
-## Installation
+## Known Bugs 
+
+- Refresh has to be triggered twice before new settings apply

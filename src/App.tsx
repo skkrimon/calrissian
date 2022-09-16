@@ -29,14 +29,14 @@ function App() {
   }, []);
 
   const loadEnvs = async () => {
-    const configLoader = new ConfigLoader();
-
-    setConfig(await configLoader.load());
-
-    const path = config.projectDir;
-
     setIsRefreshing(true);
-    const scanner = new Scanner(path);
+
+    const configLoader = new ConfigLoader();
+    const loadedConfig = await configLoader.load();
+
+    setConfig(loadedConfig);
+
+    const scanner = new Scanner(config.projectDir);
     await scanner.scanDir();
 
     const parsed = await scanner.parse();
