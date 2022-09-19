@@ -11,7 +11,6 @@ import { Notification } from './lib/notification';
 import { darkTheme } from './utils/theme';
 import { Config } from './models/config';
 import { ConfigLoader } from './lib/config-loader';
-import Footer from './components/Footer';
 
 function App() {
   const notification = new Notification();
