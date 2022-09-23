@@ -27,7 +27,7 @@ function App(): JSX.Element {
     useState(defaultLandoEnvs);
   const [config, setConfig]: [Config, (config: Config) => void] = useState(defaultConfig);
   const [dockerRunning, setDockerRunning]: [boolean, (dockerRunning: boolean) => void] =
-    useState(false);
+    useState(true);
 
   useEffect(() => {
     init();
