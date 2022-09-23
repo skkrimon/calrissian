@@ -1,0 +1,20 @@
+name: "eslint"
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: install pnpm
+        run: |
+          sudo apt-get update
+          sudo npm i -g pnpm
+      - name: install dependencies
+        run: pnpm i
+      - name: run linter
+        run: pnpm run lint
