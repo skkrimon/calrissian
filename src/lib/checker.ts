@@ -1,6 +1,8 @@
-import { List } from './../models/list';
-import { Lando } from './lando';
+import { invoke } from '@tauri-apps/api';
 import * as dJSON from 'dirty-json';
+
+import { List } from '../models/list';
+import { Lando } from './lando';
 
 export class Checker {
   public static async checkEnvRunning(dir: string): Promise<boolean> {
@@ -22,5 +24,9 @@ export class Checker {
     }
 
     return false;
+  }
+
+  public static async checkDockerRunning(): Promise<boolean> {
+    return await invoke('check_docker_running');
   }
 }

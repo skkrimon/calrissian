@@ -1,20 +1,21 @@
-import { Checker } from './checker';
-import { LandoEnv } from './../models/lando-env';
 import { FileEntry, readDir, readTextFile } from '@tauri-apps/api/fs';
 import YAML from 'yamljs';
+
+import { LandoEnv } from '../models/lando-env';
 import { Tooling } from '../models/tooling';
+import { Checker } from './checker';
 
 export class Scanner {
-  private _path: string;
-  private _landoEnviorments: FileEntry[];
+  private readonly _path: string;
+  private readonly _landoEnvironment: FileEntry[];
 
   constructor(path: string) {
     this._path = path;
-    this._landoEnviorments = [];
+    this._landoEnvironment = [];
   }
 
-  public get landoEnviorments() {
-    return this._landoEnviorments;
+  public get landoEnvironment(): FileEntry[] {
+    return this._landoEnvironment;
   }
 
   public async scanDir(): Promise<void> {
@@ -26,7 +27,7 @@ export class Scanner {
       const isValid = await this.searchLandoConfig(entry);
 
       if (isValid) {
-        this._landoEnviorments.push(entry);
+        this._landoEnvironment.push(entry);
       }
     }
   }
@@ -34,16 +35,16 @@ export class Scanner {
   public async parse(): Promise<LandoEnv[]> {
     const envs: LandoEnv[] = [];
 
-    for (let i = 0; i < this._landoEnviorments.length; i++) {
-      const landoEnviorment = this._landoEnviorments[i];
+    for (let i = 0; i < this._landoEnvironment.length; i++) {
+      const landoEnvironment = this._landoEnvironment[i];
 
-      const yamlData = await this.readLandoYaml(landoEnviorment.path);
+      const yamlData = await this.readLandoYaml(landoEnvironment.path);
       const tooling = this.parseTooling(yamlData.tooling);
 
       envs.push({
         name: yamlData.name.toLowerCase().trim(),
-        path: landoEnviorment.path,
-        running: await Checker.checkEnvRunning(landoEnviorment.path),
+        path: landoEnvironment.path,
+        running: await Checker.checkEnvRunning(landoEnvironment.path),
         tooling: tooling,
       });
     }
@@ -69,7 +70,8 @@ export class Scanner {
     }
   }
 
-  private async readLandoYaml(path: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async readLandoYaml(path: string): Promise<any> {
     const content = await readTextFile(path + '/.lando.yml');
     const parsedContent = YAML.parse(content);
 
@@ -83,7 +85,7 @@ export class Scanner {
     }
   }
 
-  private parseTooling(yaml: { [key: string]: { [key: string]: string } }) {
+  private parseTooling(yaml: { [key: string]: { [key: string]: string } }): Tooling[] {
     if (yaml === undefined) {
       return [];
     }

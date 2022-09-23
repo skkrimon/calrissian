@@ -1,6 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
-function Spinner() {
+function Spinner(): JSX.Element {
   return (
     <div className='backdrop'>
       <div className='spinner'>

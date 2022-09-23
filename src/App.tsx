@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react';
-import Environment from './components/Environment';
-import { Scanner } from './lib/scanner';
-import { LandoEnv } from './models/lando-env';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+
+import Environment from './components/Environment';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
+import WarnModal from './components/WarnModal';
+import { Checker } from './lib/checker';
+import { ConfigLoader } from './lib/config-loader';
 import { Lando } from './lib/lando';
 import { Notification } from './lib/notification';
-import { darkTheme } from './utils/theme';
+import { Scanner } from './lib/scanner';
 import { Config } from './models/config';
-import { ConfigLoader } from './lib/config-loader';
+import { LandoEnv } from './models/lando-env';
+import { darkTheme } from './utils/theme';
 
-function App() {
+function App(): JSX.Element {
   const notification = new Notification();
   const defaultLandoEnvs: LandoEnv[] = [];
   const defaultConfig: Config = { projectDir: '' };
@@ -23,40 +26,55 @@ function App() {
   const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
     useState(defaultLandoEnvs);
   const [config, setConfig]: [Config, (config: Config) => void] = useState(defaultConfig);
+  const [dockerRunning, setDockerRunning]: [boolean, (dockerRunning: boolean) => void] =
+    useState(true);
 
   useEffect(() => {
-    loadEnvs();
+    init();
   }, []);
 
-  const loadEnvs = async () => {
+  const init = async (): Promise<void> => {
+    const isRunning = await Checker.checkDockerRunning();
+    setDockerRunning(isRunning);
+
+    if (!isRunning) {
+      return;
+    }
+
     setIsRefreshing(true);
+    await loadConfig();
+    await loadEnvs();
+    setIsRefreshing(false);
+  };
 
-    const configLoader = new ConfigLoader();
-    const loadedConfig = await configLoader.load();
-
-    setConfig(loadedConfig);
-
+  const loadEnvs = async (): Promise<void> => {
     const scanner = new Scanner(config.projectDir);
     await scanner.scanDir();
 
     const parsed = await scanner.parse();
     setLandoEnvs(parsed);
-    setIsRefreshing(false);
   };
 
-  const handleRefresh = () => {
-    loadEnvs();
+  const loadConfig = async (): Promise<void> => {
+    const configLoader = new ConfigLoader();
+    const loadedConfig = await configLoader.load();
+
+    setConfig(loadedConfig);
   };
 
-  const handlePoweroff = async () => {
+  const handleRefresh = (): void => {
+    init();
+  };
+
+  const handlePoweroff = async (): Promise<void> => {
     notification.send('Stopping all running Lando Environments');
     setIsRefreshing(true);
     await Lando.poweroff();
-    loadEnvs();
+    await loadEnvs();
     notification.send('Stopped all Lando Environments');
   };
 
-  const handleSearch = (value: string) => {
+  const handleSearch = (value: string): void => {
     setSearch(value.toLowerCase().trim());
   };
 
@@ -79,6 +97,13 @@ function App() {
           );
         }
       })}
+      <WarnModal
+        btnText='Refresh'
+        btnFn={handleRefresh}
+        title={'Docker Desktop not running'}
+        message={'Please start Docker Desktop and then click refresh.'}
+        open={!dockerRunning}
+      />
     </ThemeProvider>
   );
 }

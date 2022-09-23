@@ -1,5 +1,6 @@
-import { readTextFile, BaseDirectory, writeTextFile } from '@tauri-apps/api/fs';
-import { Config } from './../models/config';
+import { BaseDirectory, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+
+import { Config } from '../models/config';
 
 export class ConfigLoader {
   private BASE_CONFIG: Config = {
@@ -11,9 +12,7 @@ export class ConfigLoader {
   }
 
   public async load(): Promise<Config> {
-    const config = await this.readConfigFile();
-
-    return config;
+    return await this.readConfigFile();
   }
 
   private async readConfigFile(): Promise<Config> {

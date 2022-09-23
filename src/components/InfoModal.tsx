@@ -1,19 +1,19 @@
-// import Box from '@mui/material/Box/Box';
+import ReactJson from '@microlink/react-json-view';
+import { CircularProgress } from '@mui/material';
+import Box from '@mui/material/Box/Box';
 import Icon from '@mui/material/Icon/Icon';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Modal from '@mui/material/Modal/Modal';
-import { useState } from 'react';
-import { Lando } from '../lib/lando';
-import * as dJSON from 'dirty-json';
-import { ChildProcess } from '@tauri-apps/api/shell';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
-import Box from '@mui/material/Box/Box';
-import ReactJson from '@microlink/react-json-view';
-import { CircularProgress } from '@mui/material';
+import { ChildProcess } from '@tauri-apps/api/shell';
+import * as dJSON from 'dirty-json';
+import React, { useState } from 'react';
 
-interface UrlModalProps {
+import { Lando } from '../lib/lando';
+
+type UrlModalProps = {
   path: string;
-}
+};
 
 interface LandoInfo {
   service: string;
@@ -35,19 +35,19 @@ const style = {
   fontSize: '12px',
 };
 
-function UrlModal({ path }: UrlModalProps) {
+function UrlModal({ path }: UrlModalProps): JSX.Element {
   const defaultInfo: LandoInfo[] = [{ service: '', urls: [''] }];
   const [landoInfos, setLandoInfos]: [LandoInfo[], (landoInfos: LandoInfo[]) => void] =
     useState(defaultInfo);
   const [open, setOpen]: [boolean, (open: boolean) => void] = useState(false);
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setLandoInfos(defaultInfo);
     setOpen(false);
   };
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
     setLoading(true);
 
