@@ -1,6 +1,6 @@
 {
   "name": "calrissian",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Tauri App for managing Lando Envs",
   "private": false,
   "type": "module",
