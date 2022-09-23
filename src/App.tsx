@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
-import Environment from './components/Environment';
-import { Scanner } from './lib/scanner';
-import { LandoEnv } from './models/lando-env';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+
+import Environment from './components/Environment';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
+import { ConfigLoader } from './lib/config-loader';
 import { Lando } from './lib/lando';
 import { Notification } from './lib/notification';
-import { darkTheme } from './utils/theme';
+import { Scanner } from './lib/scanner';
 import { Config } from './models/config';
-import { ConfigLoader } from './lib/config-loader';
+import { LandoEnv } from './models/lando-env';
+import { darkTheme } from './utils/theme';
 
-function App() {
+function App(): JSX.Element {
   const notification = new Notification();
   const defaultLandoEnvs: LandoEnv[] = [];
   const defaultConfig: Config = { projectDir: '' };
@@ -28,14 +29,14 @@ function App() {
     init();
   }, []);
 
-  const init = async () => {
+  const init = async (): Promise<void> => {
     setIsRefreshing(true);
     await loadConfig();
     await loadEnvs();
     setIsRefreshing(false);
-  }
+  };
 
-  const loadEnvs = async () => {
+  const loadEnvs = async (): Promise<void> => {
     const scanner = new Scanner(config.projectDir);
     await scanner.scanDir();
 
@@ -43,26 +44,26 @@ function App() {
     setLandoEnvs(parsed);
   };
 
-  const loadConfig = async () => {
+  const loadConfig = async (): Promise<void> => {
     const configLoader = new ConfigLoader();
     const loadedConfig = await configLoader.load();
 
     setConfig(loadedConfig);
-  }
+  };
 
-  const handleRefresh = () => {
+  const handleRefresh = (): void => {
     init();
   };
 
-  const handlePoweroff = async () => {
+  const handlePoweroff = async (): Promise<void> => {
     notification.send('Stopping all running Lando Environments');
     setIsRefreshing(true);
     await Lando.poweroff();
-    loadEnvs();
+    await loadEnvs();
     notification.send('Stopped all Lando Environments');
   };
 
-  const handleSearch = (value: string) => {
+  const handleSearch = (value: string): void => {
     setSearch(value.toLowerCase().trim());
   };
 

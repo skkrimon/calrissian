@@ -1,11 +1,12 @@
 import { Card, CardContent, Typography } from '@mui/material';
+
 import { Tooling } from '../models/tooling';
 
-interface CommandProps {
+type CommandProps = {
   tooling: Tooling;
-}
+};
 
-function Command(props: CommandProps) {
+function Command(props: CommandProps): JSX.Element {
   return (
     <Card sx={{ minWidth: 468, backgroundColor: 'black', marginTop: '10px' }}>
       <CardContent>

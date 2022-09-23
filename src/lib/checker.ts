@@ -1,6 +1,7 @@
-import { List } from './../models/list';
-import { Lando } from './lando';
 import * as dJSON from 'dirty-json';
+
+import { List } from '../models/list';
+import { Lando } from './lando';
 
 export class Checker {
   public static async checkEnvRunning(dir: string): Promise<boolean> {

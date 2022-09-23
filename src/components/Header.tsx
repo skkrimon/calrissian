@@ -1,4 +1,5 @@
 import { AppBar, Icon, IconButton, TextField, Toolbar, Tooltip } from '@mui/material';
+
 import { Config } from '../models/config';
 import Settings from './Settings';
 
@@ -9,7 +10,7 @@ interface HeaderProps {
   config: Config;
 }
 
-function Header(props: HeaderProps) {
+function Header(props: HeaderProps): JSX.Element {
   return (
     <>
       <AppBar position='static'>
@@ -24,7 +25,7 @@ function Header(props: HeaderProps) {
             id='search'
             label='Search'
             type='search'
-            onChange={(e) => props.handleSearch(e.target.value)}
+            onChange={(e): void => props.handleSearch(e.target.value)}
             size='small'
           />
           <div>

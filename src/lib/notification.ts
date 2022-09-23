@@ -19,7 +19,7 @@ export class Notification {
     sendNotification({ title: 'Calrissian', body: message });
   }
 
-  private async checkPermission() {
+  private async checkPermission(): Promise<void> {
     let permissionGranted = await isPermissionGranted();
     if (!permissionGranted) {
       const permission = await requestPermission();

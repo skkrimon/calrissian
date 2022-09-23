@@ -10,28 +10,29 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
 import Typography from '@mui/material/Typography/Typography';
 import { useState } from 'react';
+
 import { Lando } from '../lib/lando';
 import { Notification } from '../lib/notification';
 import { LandoEnv } from '../models/lando-env';
-import UrlModal from './UrlModal';
-import InfoModal from './InfoModal';
 import Command from './Command';
+import InfoModal from './InfoModal';
+import UrlModal from './UrlModal';
 
-interface EnvironmentProps {
+type EnvironmentProps = {
   env: LandoEnv;
-}
+};
 
-function Environment({ env }: EnvironmentProps) {
+function Environment({ env }: EnvironmentProps): JSX.Element {
   const notifications = new Notification();
 
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState(false);
   const [expanded, setExpanded]: [boolean, (expanded: boolean) => void] = useState(false);
 
-  const handleExpandClick = () => {
+  const handleExpandClick = (): void => {
     setExpanded(!expanded);
   };
 
-  const onStart = () => {
+  const onStart = (): void => {
     notifications.send('Starting ' + env.name);
     setLoading(true);
     Lando.start(env.path).then(() => {
@@ -41,7 +42,7 @@ function Environment({ env }: EnvironmentProps) {
     });
   };
 
-  const onStop = () => {
+  const onStop = (): void => {
     notifications.send('Stopping ' + env.name);
     setLoading(true);
     Lando.stop(env.path).then(() => {
@@ -51,7 +52,7 @@ function Environment({ env }: EnvironmentProps) {
     });
   };
 
-  const onRestart = () => {
+  const onRestart = (): void => {
     notifications.send('Restarting ' + env.name);
     setLoading(true);
     Lando.restart(env.path).then(() => {
@@ -61,7 +62,7 @@ function Environment({ env }: EnvironmentProps) {
     });
   };
 
-  const onDestroy = () => {
+  const onDestroy = (): void => {
     notifications.send('Destroying ' + env.name);
     setLoading(true);
     Lando.destroy(env.path).then(() => {
@@ -71,7 +72,7 @@ function Environment({ env }: EnvironmentProps) {
     });
   };
 
-  const onRebuild = () => {
+  const onRebuild = (): void => {
     notifications.send('Rebuilding ' + env.name);
     setLoading(true);
     Lando.rebuild(env.path).then(() => {

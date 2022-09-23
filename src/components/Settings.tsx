@@ -1,39 +1,40 @@
 import {
+  Box,
   Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
   DialogActions,
+  DialogContent,
+  DialogTitle,
   Icon,
   IconButton,
-  Tooltip,
   TextField,
-  Box,
+  Tooltip,
 } from '@mui/material';
-import { useState } from 'react';
-import { ConfigLoader } from '../lib/config-loader';
-import { Config } from '../models/config';
 import { open as openDialog } from '@tauri-apps/api/dialog';
 import { appDir } from '@tauri-apps/api/path';
+import { useState } from 'react';
 
-interface SettingsProps {
+import { ConfigLoader } from '../lib/config-loader';
+import { Config } from '../models/config';
+
+type SettingsProps = {
   config: Config;
-}
+};
 
-function Settings(props: SettingsProps) {
+function Settings(props: SettingsProps): JSX.Element {
   const [open, setOpen]: [boolean, (open: boolean) => void] = useState(false);
   const [projectDir, setProjectDir]: [string, (projectDir: string) => void] = useState('');
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setProjectDir(props.config.projectDir);
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const handleClickClose = async () => {
+  const handleClickClose = async (): Promise<void> => {
     const updatedConfig: Config = {
       projectDir,
     };
@@ -43,7 +44,7 @@ function Settings(props: SettingsProps) {
     setOpen(false);
   };
 
-  const handleSelect = async () => {
+  const handleSelect = async (): Promise<void> => {
     const selected = await openDialog({
       directory: true,
       multiple: false,
@@ -80,7 +81,7 @@ function Settings(props: SettingsProps) {
             <TextField
               style={{ width: '340px' }}
               id='search'
-              onChange={(e) => setProjectDir(e.target.value)}
+              onChange={(e): void => setProjectDir(e.target.value)}
               value={projectDir}
               size='small'
               label='Path to project directory'

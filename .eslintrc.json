@@ -23,7 +23,9 @@
         "react",
         "react-hooks",
         "@typescript-eslint",
-        "prettier"
+        "prettier",
+        "simple-import-sort",
+        "import"
     ],
     "rules": {
         "semi": "error",
@@ -31,11 +33,21 @@
         "camelcase": "warn",
         "spaced-comment": "error",
         "quotes": ["error", "single"],
-        "no-console": "warn"
+        "no-console": "warn",
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error"
     },
     "settings": {
         "import/resolver": {
-            "typescript": {}
+            "typescript": true,
+            "node": true
+        },
+        "react": {
+            "version": "detect"
         }
     }
 }

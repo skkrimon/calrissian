@@ -46,6 +46,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.7",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
     "prettier": "^2.7.1",
     "typescript": "^4.6.4",
     "vite": "^3.0.2"
@@ -60,7 +61,7 @@
   ],
   "author": "Simon Zapf",
   "license": "MIT",
-  "bugs":{
+  "bugs": {
     "url": "https://github.com/skkrimon/calrissian/issues"
   }
 }
