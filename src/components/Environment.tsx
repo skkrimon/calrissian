@@ -11,6 +11,7 @@ import Tooltip from '@mui/material/Tooltip/Tooltip';
 import Typography from '@mui/material/Typography/Typography';
 import { useState } from 'react';
 
+import { Checker } from '../lib/checker';
 import { Lando } from '../lib/lando';
 import { Notification } from '../lib/notification';
 import { LandoEnv } from '../models/lando-env';
@@ -32,7 +33,12 @@ function Environment({ env }: EnvironmentProps): JSX.Element {
     setExpanded(!expanded);
   };
 
-  const onStart = (): void => {
+  const onStart = async (): Promise<void> => {
+    if (!(await Checker.checkDockerRunning())) {
+      notifyDockerNotRunning();
+      return;
+    }
+
     notifications.send('Starting ' + env.name);
     setLoading(true);
     Lando.start(env.path).then(() => {
@@ -42,7 +48,12 @@ function Environment({ env }: EnvironmentProps): JSX.Element {
     });
   };
 
-  const onStop = (): void => {
+  const onStop = async (): Promise<void> => {
+    if (!(await Checker.checkDockerRunning())) {
+      notifyDockerNotRunning();
+      return;
+    }
+
     notifications.send('Stopping ' + env.name);
     setLoading(true);
     Lando.stop(env.path).then(() => {
@@ -52,7 +63,12 @@ function Environment({ env }: EnvironmentProps): JSX.Element {
     });
   };
 
-  const onRestart = (): void => {
+  const onRestart = async (): Promise<void> => {
+    if (!(await Checker.checkDockerRunning())) {
+      notifyDockerNotRunning();
+      return;
+    }
+
     notifications.send('Restarting ' + env.name);
     setLoading(true);
     Lando.restart(env.path).then(() => {
@@ -62,7 +78,12 @@ function Environment({ env }: EnvironmentProps): JSX.Element {
     });
   };
 
-  const onDestroy = (): void => {
+  const onDestroy = async (): Promise<void> => {
+    if (!(await Checker.checkDockerRunning())) {
+      notifyDockerNotRunning();
+      return;
+    }
+
     notifications.send('Destroying ' + env.name);
     setLoading(true);
     Lando.destroy(env.path).then(() => {
@@ -72,13 +93,22 @@ function Environment({ env }: EnvironmentProps): JSX.Element {
     });
   };
 
-  const onRebuild = (): void => {
+  const onRebuild = async (): Promise<void> => {
+    if (!(await Checker.checkDockerRunning())) {
+      notifyDockerNotRunning();
+      return;
+    }
+
     notifications.send('Rebuilding ' + env.name);
     setLoading(true);
     Lando.rebuild(env.path).then(() => {
       notifications.send('Successfully rebuílded ' + env.name);
       setLoading(false);
     });
+  };
+
+  const notifyDockerNotRunning = async (): Promise<void> => {
+    notifications.send('Can not change env status while docker is not running.');
   };
 
   return (

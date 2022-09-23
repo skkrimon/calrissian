@@ -35,7 +35,7 @@ function App(): JSX.Element {
     const isRunning = await Checker.checkDockerRunning();
     setDockerRunning(isRunning);
 
-    if (!dockerRunning) {
+    if (!isRunning) {
       return;
     }
 
