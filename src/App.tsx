@@ -1,10 +1,11 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Environment from './components/Environment';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
+import { Checker } from './lib/checker';
 import { ConfigLoader } from './lib/config-loader';
 import { Lando } from './lib/lando';
 import { Notification } from './lib/notification';
@@ -24,12 +25,20 @@ function App(): JSX.Element {
   const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
     useState(defaultLandoEnvs);
   const [config, setConfig]: [Config, (config: Config) => void] = useState(defaultConfig);
+  const [dockerRunning, setDockerRunning]: [boolean, (dockerRunning: boolean) => void] = useState(false);
 
   useEffect(() => {
     init();
   }, []);
 
   const init = async (): Promise<void> => {
+    const isRunning = await Checker.checkDockerRunning();
+    setDockerRunning(isRunning);
+
+    if (!dockerRunning) {
+      return;
+    }
+
     setIsRefreshing(true);
     await loadConfig();
     await loadEnvs();
