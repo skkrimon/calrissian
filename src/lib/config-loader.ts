@@ -1,6 +1,6 @@
-import {BaseDirectory, readTextFile, writeTextFile} from '@tauri-apps/api/fs';
+import { BaseDirectory, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
 
-import {Config} from '../models/config';
+import { Config } from '../models/config';
 
 export class ConfigLoader {
   private BASE_CONFIG: Config = {

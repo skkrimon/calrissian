@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Environment from './components/Environment';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
+import WarnModal from './components/WarnModal';
 import { Checker } from './lib/checker';
 import { ConfigLoader } from './lib/config-loader';
 import { Lando } from './lib/lando';
@@ -25,7 +26,8 @@ function App(): JSX.Element {
   const [landoEnvs, setLandoEnvs]: [LandoEnv[], (landoEnvs: LandoEnv[]) => void] =
     useState(defaultLandoEnvs);
   const [config, setConfig]: [Config, (config: Config) => void] = useState(defaultConfig);
-  const [dockerRunning, setDockerRunning]: [boolean, (dockerRunning: boolean) => void] = useState(false);
+  const [dockerRunning, setDockerRunning]: [boolean, (dockerRunning: boolean) => void] =
+    useState(false);
 
   useEffect(() => {
     init();
@@ -95,6 +97,13 @@ function App(): JSX.Element {
           );
         }
       })}
+      <WarnModal
+        btnText='Refresh'
+        btnFn={handleRefresh}
+        title={'Docker Desktop not running'}
+        message={'Please start Docker Desktop and then click refresh.'}
+        open={!dockerRunning}
+      />
     </ThemeProvider>
   );
 }
