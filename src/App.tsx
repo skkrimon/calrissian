@@ -25,27 +25,33 @@ function App() {
   const [config, setConfig]: [Config, (config: Config) => void] = useState(defaultConfig);
 
   useEffect(() => {
-    loadEnvs();
+    init();
   }, []);
 
-  const loadEnvs = async () => {
+  const init = async () => {
     setIsRefreshing(true);
+    await loadConfig();
+    await loadEnvs();
+    setIsRefreshing(false);
+  }
 
-    const configLoader = new ConfigLoader();
-    const loadedConfig = await configLoader.load();
-
-    setConfig(loadedConfig);
-
+  const loadEnvs = async () => {
     const scanner = new Scanner(config.projectDir);
     await scanner.scanDir();
 
     const parsed = await scanner.parse();
     setLandoEnvs(parsed);
-    setIsRefreshing(false);
   };
 
+  const loadConfig = async () => {
+    const configLoader = new ConfigLoader();
+    const loadedConfig = await configLoader.load();
+
+    setConfig(loadedConfig);
+  }
+
   const handleRefresh = () => {
-    loadEnvs();
+    init();
   };
 
   const handlePoweroff = async () => {
