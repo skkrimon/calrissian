@@ -43,6 +43,12 @@ function App(): JSX.Element {
 
     setIsRefreshing(true);
     await loadConfig();
+
+    if (config.projectDir === '') {
+      setIsRefreshing(false);
+      return;
+    }
+
     await loadEnvs();
     setIsRefreshing(false);
   };
