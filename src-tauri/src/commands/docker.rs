@@ -16,6 +16,10 @@ pub fn check_docker_running() -> bool {
         search_value = "docker.exe";
     }
 
+    if operating_system == String::from("Darwin") {
+        search_value = "docker";
+    }
+
     let mut sys = System::new_all();
     sys.refresh_all();
 
